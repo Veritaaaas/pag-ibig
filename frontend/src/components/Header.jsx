@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 
@@ -8,10 +10,12 @@ function Header() {
                 <input type="text" placeholder="Search" className="border-b-2 border-gray-300 p-2 font-semibold min-w-16 text-[17px]" />
                 <HiMiniMagnifyingGlass className="text-[25px]" />
             </div>
-            <div className="flex items-center text-[#3564FD] gap-6">
-                <MdOutlinePersonAddAlt className="text-[40px]" />
-                <h1 className="text-[20px] font-bold">ADD MEMBER</h1>
-            </div>
+            <Link to='/add-member'>
+                <div className="flex items-center text-[#3564FD] gap-6 cursor-pointer">
+                    <MdOutlinePersonAddAlt className="text-[40px]" />
+                    <h1 className="text-[20px] font-bold">ADD MEMBER</h1>
+                </div>
+            </Link>
         </div>
     );
 }
