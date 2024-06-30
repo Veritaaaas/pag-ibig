@@ -1,16 +1,14 @@
-
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
-
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Members from './components/Members';
 
 function App() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="w-full">
-        <Header />
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to='/members'/>}/>
+        <Route path="/members" element={<Members />} />
+      </Routes>
+    </Router>
   );
 }
 
