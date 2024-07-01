@@ -21,5 +21,13 @@ def get_employees():
     cursor.close()
     return jsonify(employees)
 
+@app.route('/presentEmp', methods=['GET'])
+def get_presentEmp():
+    cursor = cnx.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM presentemployers")
+    employers = cursor.fetchall()
+    cursor.close()
+    return jsonify(employers)
+
 if __name__ == '__main__':
     app.run(debug=True)
