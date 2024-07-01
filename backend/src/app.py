@@ -29,5 +29,13 @@ def get_presentEmp():
     cursor.close()
     return jsonify(employers)
 
+@app.route('/prevEmp', methods=['GET'])
+def get_prevEmp():
+    cursor = cnx.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM prevemployers")
+    employers = cursor.fetchall()
+    cursor.close()
+    return jsonify(employers)
+
 if __name__ == '__main__':
     app.run(debug=True)
