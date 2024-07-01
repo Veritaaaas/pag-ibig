@@ -5,7 +5,7 @@ import { MdOutlinePersonAddAlt } from "react-icons/md";
 
 function Header() {
     return (
-        <div className="flex w-full justify-between pt-8 px-8">
+        <div className="flex w-full justify-between pt-8 px-8 max-w-[82%]">
             <div className="flex text-black items-center gap-4">
                 <input type="text" placeholder="Search" className="border-b-2 border-gray-300 p-2 font-semibold min-w-16 text-[17px]" />
                 <HiMiniMagnifyingGlass className="text-[25px]" />
