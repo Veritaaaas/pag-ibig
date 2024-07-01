@@ -42,7 +42,7 @@ function Member_form() {
         <div className="">
             <h1 className="text-3xl font-semibold">Membership Details</h1>
             <div className="flex flex-col gap-8 px-6 mt-4 text-xl">
-                <div className="flex gap-[400px]">
+                <div className="flex gap-32">
                     <div className="flex flex-col text-xl max-w-fit gap-2">
                         <label htmlFor="Pag-ibig MID">Pag-ibig MID</label>
                         <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="Pag-ibig MID" id="Pag-ibig MID" placeholder="00000000"/>
@@ -65,7 +65,7 @@ function Member_form() {
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-[400px]">
+                <div className="flex gap-32">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="Membership Category">Membership Category</label>
                         <div className="flex gap-8">
