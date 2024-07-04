@@ -1,7 +1,7 @@
 import CreatableSelect from 'react-select/creatable';
 import { useState } from 'react';
 
-function Member_form() {
+function Member_form({ memberFormData, setMemberFormData}) {
     const mandatoryOptions = [
         { value: 'Private', label: 'Private' },
         { value: 'Government', label: 'Government' },
@@ -34,8 +34,19 @@ function Member_form() {
         );
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setMemberFormData({ ...memberFormData, [name]: value });
+    }
+
     const handleMembershipChange = (event) => {
-        setMembershipCategory(event.target.value);
+        const { value } = event.target;
+        setMembershipCategory(value);
+        setMemberFormData({ ...memberFormData, membershipCategory: value });
+    };
+
+    const handleMembershipSubCategoryChange = (newValue) => {
+        setMemberFormData({ ...memberFormData, membershipSubCategory: newValue ? newValue.value : '' });
     };
 
     return (
@@ -45,21 +56,21 @@ function Member_form() {
                 <div className="flex gap-32">
                     <div className="flex flex-col text-xl max-w-fit gap-2">
                         <label htmlFor="Pag-ibig MID">Pag-ibig MID</label>
-                        <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="Pag-ibig MID" id="Pag-ibig MID" placeholder="00000000"/>
+                        <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="pagIbigMID" id="pagIbigMID" placeholder="00000000" onChange={handleInputChange}/>
                     </div>
                     <div className="flex flex-col max-w-fit gap-2">
                         <h1>Occupational Status</h1>
                         <div className="flex gap-8">
                             <div className="flex gap-2">
-                                <input type="radio" name="Occupational Status" id="Employed" value="Employed"/>
+                                <input type="radio" name="occupationalStatus" id="Employed" value="Employed" onChange={handleInputChange} checked={memberFormData.occupationalStatus === 'Employed'}/>
                                 <label htmlFor="Employed">Employed</label>
                             </div>
                             <div className="flex gap-2">
-                                <input type="radio" name="Occupational Status" id="Unemployed" value="Unemployed"/>
+                                <input type="radio" name="occupationalStatus" id="Unemployed" value="Unemployed" onChange={handleInputChange} checked={memberFormData.occupationalStatus === 'Unemployed'}/>
                                 <label htmlFor="Unemployed">Unemployed</label>
                             </div>
                             <div className="flex gap-2">
-                                <input type="radio" name="Occupational Status" id="First-time Job Seeker" value="First-time Job Seeker"/>
+                                <input type="radio" name="occupationalStatus" id="First-time Job Seeker" value="First-time Job Seeker" onChange={handleInputChange} checked={memberFormData.occupationalStatus === 'First-time Job Seeker'}/>
                                 <label htmlFor="First-time Job Seeker">First-time Job Seeker</label>
                             </div>
                         </div>
@@ -87,6 +98,7 @@ function Member_form() {
                             isSearchable
                             filterOption={customFilterOption}
                             placeholder="Select or type..."
+                            onChange={handleMembershipSubCategoryChange}
                         />
                     </div>
                 </div>

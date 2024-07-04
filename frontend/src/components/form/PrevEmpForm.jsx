@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
 
-function PrevEmpForm() {
+function PrevEmpForm({ PrevEmpFormData, setPrevEmpFormData}) {
     const initialEmployment = {
         employerName: '',
         employerAddress: '',
@@ -27,15 +27,19 @@ function PrevEmpForm() {
         setEmployments(updatedEmployments);
     };
 
+    useEffect(() => {
+        setPrevEmpFormData(employments);
+    }, [employments]);
+
     return (
         <div>
             <h1 className="text-3xl font-semibold">Previous Employments Details</h1>
             <div className="flex flex-col gap-8 px-6 mt-4 text-xl">
                 {employments.map((employment, index) => (
-                    <div key={index} className="flex gap-16">
-                        <div className="flex flex-col text-xl max-w-fit gap-2">
+                    <div key={index} className="flex gap-12 text-lg">
+                        <div className="flex flex-col text-lg max-w-fit gap-2">
                             <label htmlFor={`employerName-${index}`}>Employer/Business Name</label>
-                            <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="employerName" id={`employerName-${index}`} placeholder="Company Inc." value={employment.employerName} onChange={(e) => handleEmploymentChange(index, e)}/>
+                            <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[]" name="employerName" id={`employerName-${index}`} placeholder="Company Inc." value={employment.employerName} onChange={(e) => handleEmploymentChange(index, e)}/>
                         </div>
                         <div className="flex flex-col max-w-fit gap-2">
                             <label htmlFor={`employerAddress-${index}`}>Employer/Business Address</label>

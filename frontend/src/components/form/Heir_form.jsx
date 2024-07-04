@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
 
-function Heir_form() {
+function Heir_form({ heirFormData, setHeirFormData }) {
 
     const initialHeir = {
         heirName: '',
@@ -26,13 +26,17 @@ function Heir_form() {
         setHeirs(updatedHeirs);
     }
 
+    useEffect(() => {
+        setHeirFormData(heirs);
+    }, [heirs]);
+
     return (
         <div className="">
             <h1 className="text-3xl font-semibold">Heirs Details</h1>
             <div className="flex flex-col gap-8 px-6 mt-4 text-xl">
                 {heirs.map((heir, index) => (
-                    <div key={index} className="flex gap-32">
-                        <div className="flex flex-col text-xl max-w-fit gap-2">
+                    <div key={index} className="flex gap-32 text-lg">
+                        <div className="flex flex-col text-lg max-w-fit gap-2">
                             <label htmlFor={`heirName-${index}`}>Heir Name</label>
                             <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="heirName" id={`heirName-${index}`} placeholder="Juan Dela Cruz" value={heir.heirName} onChange={(e) => handleHeirChange(index, e)}/>
                         </div>
