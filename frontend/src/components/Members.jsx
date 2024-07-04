@@ -1,4 +1,17 @@
+import { useState } from "react";
+import MemberModal from "./modals/MemberModal";
+
 function Members({ members }) {
+
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedMember, setSelectedMember] = useState(null);
+
+    const handleRowClick = (member) => {
+        setSelectedMember(member);
+        setShowModal(true);
+    }
+
     return (
         <div className="mt-12 px-8">
             <table className="text-[#636363]">
@@ -38,7 +51,7 @@ function Members({ members }) {
                 </thead>
                     <tbody className="text-[18px] text-[#636363] font-semibold">
                         {members.map((member) => (
-                            <tr key={member.pi_mid} className="border-b-2 border-gray-200">
+                            <tr key={member.pi_mid} className="border-b-2 border-gray-200" onClick={() => handleRowClick(member)}>
                                 <td className="px-10 py-2">{member.PI_MID}</td>
                                 <td className="px-10 py-2">{member.Occupational_Status}</td>
                                 <td className="px-10 py-2">{member.Membership_category}</td>
@@ -73,6 +86,7 @@ function Members({ members }) {
                         ))}
                     </tbody>
             </table>
+            {showModal && <MemberModal member={selectedMember} setShowModal={setShowModal} />}
         </div>
     )
 }
