@@ -130,7 +130,7 @@ def add_member():
         cursor.execute(query, values)
         cnx.commit()
         
-    for heir in data['heir  FormData']:
+    for heir in data['heirFormData']:
         values = (
             None,
             data['memberFormData']['pagIbigMID'],
@@ -146,6 +146,17 @@ def add_member():
     
     cursor.close()
     return 'Member added successfully', 200
+
+@app.route('/delete-member', methods=['POST'])
+def delete():
+    data = request.json
+    cursor = cnx.cursor(dictionary=True)
+    print(data['PI_MID'])
+    cursor.execute(f"DELETE FROM members WHERE PI_MID = {data['PI_MID']}")
+    cnx.commit()
+    cursor.close()
+    return 'Member deleted successfully', 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
