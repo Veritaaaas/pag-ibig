@@ -44,11 +44,13 @@ function Form() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        console.log(addressContactFormData)
+        console.log(presentEmpFormData)
+       
         fetch('http://localhost:5000/add-member', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 memberFormData,
@@ -57,14 +59,15 @@ function Form() {
                 presentEmpFormData,
                 prevEmpFormData,
                 heirFormData
-            })
-        }).then(response => {
-            if (response.ok) {
-                alert('Member added successfully');
-            } else {
-                alert('Failed to add member');
-            }
+            }),
         })
+        .then(response => response.json())
+        .then(data => {
+            alert('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
     }
 
@@ -75,11 +78,11 @@ function Form() {
                     memberFormData={memberFormData}
                     setMemberFormData={setMemberFormData}
                 />
-                <Personal_form 
+                <Personal_form
                     personalFormData={personalFormData}
                     setPersonalFormData={setPersonalFormData}
                 />
-                <Address_Contact_form 
+                <Address_Contact_form
                     addressContactFormData={addressContactFormData}
                     setAddressContactFormData={setAddressContactFormData}
                 />

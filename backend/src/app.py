@@ -48,6 +48,8 @@ def get_heirs():
 @app.route('/add-member', methods=['POST'])
 def add_member():
     data = request.json
+    cursor = cnx.cursor(dictionary=True)
+    
     values = (
         data['memberFormData']['pagIbigMID'],
         data['memberFormData']['occupationalStatus'],
@@ -80,11 +82,68 @@ def add_member():
         data['addressContactFormData']['emailAddress'],
         data['personalFormData']['companyCode'],
     )
-    cursor = cnx.cursor(dictionary=True)
+    
     placeholders = ', '.join(['%s'] * len(values)) 
     query = f"INSERT INTO members VALUES ({placeholders})"
     cursor.execute(query, values)
     cnx.commit()
+    
+    values = (
+        data['personalFormData']['companyCode'],
+        data['presentEmpFormData']['occupation'],
+        data['presentEmpFormData']['employmentStatus'],
+        data['presentEmpFormData']['typeofWork'],
+        data['presentEmpFormData']['employer/BusinessName'],
+        data['presentEmpFormData']['monthlyIncome'],
+        data['presentEmpFormData']['employer/BusinessAddress'],
+        data['presentEmpFormData']['officeAssignment'],
+        data['presentEmpFormData']['employmentDate'],
+    )
+    
+    placeholders = ', '.join(['%s'] * len(values)) 
+    query = f"INSERT INTO presentemployers VALUES ({placeholders})"
+    cursor.execute(query, values)
+    cnx.commit()
+    
+    for prevEmp in data['prevEmpFormData']:
+        values = (
+            None,
+            prevEmp['employerName'],
+            prevEmp['employerAddress'],
+        )
+        
+        placeholders = ', '.join(['%s'] * len(values)) 
+        query = f"INSERT INTO prevemployers VALUES ({placeholders})"
+        cursor.execute(query, values)
+        cnx.commit()
+        
+        values = (
+            None,
+            data['memberFormData']['pagIbigMID'],
+            prevEmp['officeAssignment'],
+            prevEmp['fromDate'],
+            prevEmp['toDate'],
+        )
+        
+        placeholders = ', '.join(['%s'] * len(values))
+        query = f"INSERT INTO prevemployment VALUES ({placeholders})"
+        cursor.execute(query, values)
+        cnx.commit()
+        
+    for heir in data['heir  FormData']:
+        values = (
+            None,
+            data['memberFormData']['pagIbigMID'],
+            heir['heirName'],
+            heir['birth_date'],
+            heir['relationship'],
+        )
+        
+        placeholders = ', '.join(['%s'] * len(values))
+        query = f"INSERT INTO heirs VALUES ({placeholders})"
+        cursor.execute(query, values)
+        cnx.commit()
+    
     cursor.close()
     return 'Member added successfully', 200
 
