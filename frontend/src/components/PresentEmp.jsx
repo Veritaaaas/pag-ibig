@@ -24,7 +24,7 @@ function PresentEmp({ emp }) {
                             <td className="px-10 py-2 whitespace-nowrap">{emp.CompanyCode}</td>
                             <td className="px-10 py-2">{emp.Occupation}</td>
                             <td className="px-10 py-2">{emp.PresentEmpStatus}</td>
-                            <td className="px-10 py-2">{emp.OFW_TypeOfWork}</td>
+                            <td className="px-10 py-2 whitespace-nowrap">{emp.OFW_TypeOfWork}</td>
                             <td className="px-10 py-2 whitespace-nowrap">{emp.PresentEmpName}</td>
                             <td className="px-10 py-2 whitespace-nowrap">{emp.PresentEmpAddress}</td>
                             <td className="px-10 py-2">{emp.MonthlyIncome_Total}</td>

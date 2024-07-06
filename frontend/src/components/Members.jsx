@@ -91,7 +91,7 @@ function Members({ members, setMembers }) {
                                 <td className="px-10 py-2">{member.DivStationCode}</td>
                                 <td className="px-10 py-2 whitespace-nowrap">{member.PernAddress}</td>
                                 <td className="px-10 py-2 whitespace-nowrap">{member.CurrAddress}</td>
-                                <td className="px-10 py-2">{member.MailAddress}</td>
+                                <td className="px-10 py-2 whitespace-nowrap">{member.MailAddress}</td>
                                 <td className="px-10 py-2">{member.HomeCode}</td>
                                 <td className="px-10 py-2">{member.CellNum}</td>
                                 <td className="px-10 py-2">{member.BusinessDirectLine}</td>
