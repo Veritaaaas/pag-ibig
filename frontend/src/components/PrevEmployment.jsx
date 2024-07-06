@@ -1,5 +1,16 @@
+import React, { useState } from 'react';
+import PrevEmploymentModal from './modals/PrevEmploymentModal';
 
 function PrevEmployment({ prevEmp }) {
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedEmp, setSelectedEmp] = useState({});
+
+    const handleRowClick = (emp) => {
+        setSelectedEmp(emp);
+        setShowModal(true);
+        console.log(emp);
+    }
 
     return (
         <div className="mt-12 px-8 w-full">
@@ -15,7 +26,7 @@ function PrevEmployment({ prevEmp }) {
                 </thead>
                 <tbody className="text-[18px] text-[#636363] font-semibold text-center">
                     {prevEmp.map((emp) => (
-                        <tr key={emp.CompanyCode} className="border-b-2 border-gray-200">
+                        <tr key={emp.CompanyCode} className="border-b-2 border-gray-200" onClick={() => handleRowClick(emp)}>
                             <td className="px-10 py-2 whitespace-nowrap">{emp.PrevCompCode}</td>
                             <td className="px-10 py-2">{emp.PI_MID}</td>
                             <td className="px-10 py-2">{emp.PrevEmpOfficeAssignment}</td>
@@ -25,6 +36,7 @@ function PrevEmployment({ prevEmp }) {
                     ))}
                 </tbody>
             </table>
+            {showModal && <PrevEmploymentModal emp={selectedEmp} setShowModal={setShowModal} />}
         </div>
     )
 }

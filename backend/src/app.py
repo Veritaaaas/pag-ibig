@@ -170,6 +170,10 @@ def delete():
             cursor.execute("DELETE FROM presentemployers WHERE CompanyCode = %s", (data['id'],))
             cnx.commit()
             return 'Present Employer deleted successfully', 200
+        elif data['type'] == 'PrevEmployment':
+            cursor.execute("DELETE FROM prevemployment WHERE PrevCompCode = %s AND PI_MID = %s", (data['id'], data['PI_MID']))
+            cnx.commit()
+            return 'Previous Employer deleted successfully', 200
     finally:
         cursor.close()
 
@@ -209,6 +213,16 @@ def update_member():
             cursor.execute(query, values)
             cnx.commit()
             return (jsonify({'message': 'Present Employer updated successfully'}), 200)
+        
+        elif (data['type'] == 'PrevEmployment'):
+            columns = [
+                'PrevEmpOfficeAssignment', 'FromDate', 'ToDate'
+            ]
+            set_clause = ', '.join([f"{col} = %s" for col in columns])
+            values = tuple(data['data'][col] for col in columns) + (data['data']['PrevCompCode'], data['data']['PI_MID'])
+            cursor.execute(f"UPDATE prevemployment SET {set_clause} WHERE PrevCompCode = %s AND PI_MID = %s", values)
+            cnx.commit()
+        
     finally:
         cursor.close()
 
