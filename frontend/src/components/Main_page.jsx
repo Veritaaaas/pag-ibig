@@ -105,7 +105,7 @@ function Main_page() {
                 <Header />
                 {location.pathname === "/members" && <Members members={members} setMembers={setMembers}/>}
                 {location.pathname === "/add-member" && <Form />}
-                {location.pathname === "/presentEmp" && <PresentEmp emp={presentEmployer} />}
+                {location.pathname === "/presentEmp" && <PresentEmp emp={presentEmployer} setEmp={setPresentEmployer}/>}
                 {location.pathname === "/prevEmployment" && <PrevEmployment prevEmp={prevEmployment} />}
                 {location.pathname === "/prevEmployer" && <PrevEmployer prevEmp={prevEmployer} />}
                 {location.pathname === "/heirs" && <Heirs heirs={heirs} />}

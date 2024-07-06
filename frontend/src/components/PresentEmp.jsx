@@ -1,6 +1,30 @@
+import { useEffect, useState } from "react";
+import PresentEmpModal from "./modals/PresentEmpModal";
 
+function PresentEmp({ emp, setEmp }) {
 
-function PresentEmp({ emp }) {
+    const [showModal, setShowModal] = useState(false);
+    const [selectedEmp, setSelectedEmp] = useState(null);
+
+    const handleRowClick = (emp) => {
+        setSelectedEmp(emp);
+        setShowModal(true);
+    }
+
+    const getPresentEmployer = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/presentEmp");
+            const jsonData = await response.json();
+            console.log(jsonData);
+            setEmp(jsonData);
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
+    useEffect(() => {
+        getPresentEmployer();
+    }, [showModal]);
 
     return (
         <div className="mt-12 px-8 overflow-x-auto">
@@ -20,7 +44,7 @@ function PresentEmp({ emp }) {
                 </thead>
                 <tbody className="text-[18px] text-[#636363] font-semibold">
                     {emp.map((emp) => (
-                        <tr key={emp.CompanyCode} className="border-b-2 border-gray-200">
+                        <tr key={emp.CompanyCode} className="border-b-2 border-gray-200" onClick={() => handleRowClick(emp)}>
                             <td className="px-10 py-2 whitespace-nowrap">{emp.CompanyCode}</td>
                             <td className="px-10 py-2">{emp.Occupation}</td>
                             <td className="px-10 py-2">{emp.PresentEmpStatus}</td>
@@ -33,8 +57,8 @@ function PresentEmp({ emp }) {
                         </tr>
                     ))}
                 </tbody>
-
             </table>
+            {showModal && <PresentEmpModal emp={selectedEmp} setShowModal={setShowModal} />}
         </div>
     )
 }

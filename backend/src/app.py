@@ -158,36 +158,59 @@ def add_member():
 @app.route('/delete-member', methods=['POST'])
 def delete():
     data = request.json
-    cursor = cnx.cursor(dictionary=True)
-    cursor.execute(f"DELETE FROM members WHERE PI_MID = {data['PI_MID']}")
-    cnx.commit()
-    cursor.close()
-    return 'Member deleted successfully', 200
+    print(data)
+    
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        if data['type'] == 'member':
+            cursor.execute("DELETE FROM members WHERE PI_MID = %s", (data['PI_MID'],))
+            cnx.commit()
+            return 'Member deleted successfully', 200
+        elif data['type'] == 'PresentEmp':
+            cursor.execute("DELETE FROM presentemployers WHERE CompanyCode = %s", (data['id'],))
+            cnx.commit()
+            return 'Present Employer deleted successfully', 200
+    finally:
+        cursor.close()
 
 @app.route('/update-member', methods=['POST'])
 def update_member():
     data = request.json
-    cursor = cnx.cursor(dictionary=True)
     
-    # Assuming you have a mapping of form data fields to database columns
-    columns = [
-        'Occupational_Status', 'Membership_category', 'Membership_subcategory',
-        'Name', 'FatherName', 'MotherName', 'SpouseName', 'BirthDate',
-        'BirthPlace', 'MaritalStatus', 'Citizenship', 'Sex', 'Height', 'Weight',
-        'ProminentFeatures', 'PaymentFrequency', 'TIN', 'SSS', 'SerialBadge',
-        'DivStationCode', 'PernAddress', 'CurrAddress', 'MailAddress',
-        'HomeCode', 'CellNum', 'BusinessDirectLine', 'BusinessTrunkLine',
-        'EmailAddress', 'CompanyCode'
-    ]
-    set_clause = ', '.join([f"{col} = %s" for col in columns])
-    values = tuple(data['memberFormData'][col] for col in columns) + (data['memberFormData']['PI_MID'],)
-    
-    query = f"UPDATE members SET {set_clause} WHERE PI_MID = %s"
-    cursor.execute(query, values)
-    cnx.commit()
-
-    return (jsonify({'message': 'Member updated successfully'}), 200)
-    
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        if (data['type'] == 'member'):
+            columns = [
+                'Occupational_Status', 'Membership_category', 'Membership_subcategory',
+                'Name', 'FatherName', 'MotherName', 'SpouseName', 'BirthDate',
+                'BirthPlace', 'MaritalStatus', 'Citizenship', 'Sex', 'Height', 'Weight',
+                'ProminentFeatures', 'PaymentFrequency', 'TIN', 'SSS', 'SerialBadge',
+                'DivStationCode', 'PernAddress', 'CurrAddress', 'MailAddress',
+                'HomeCode', 'CellNum', 'BusinessDirectLine', 'BusinessTrunkLine',
+                'EmailAddress', 'CompanyCode'
+            ]
+            set_clause = ', '.join([f"{col} = %s" for col in columns])
+            values = tuple(data['memberFormData'][col] for col in columns) + (data['memberFormData']['PI_MID'],)
+            
+            query = f"UPDATE members SET {set_clause} WHERE PI_MID = %s"
+            cursor.execute(query, values)
+            cnx.commit()
+            return (jsonify({'message': 'Member updated successfully'}), 200)
+        
+        elif (data['type'] == 'PresentEmp'):
+            columns = [
+                'Occupation', 'PresentEmpStatus', 'OFW_TypeOfWork', 'PresentEmpName',
+                'MonthlyIncome_Total', 'PresentEmpAddress', 'PresentOfficeAssignment', 'PresentDateEmployed'
+            ]
+            set_clause = ', '.join([f"{col} = %s" for col in columns])
+            values = tuple(data['data'][col] for col in columns) + (data['data']['CompanyCode'],)
+            
+            query = f"UPDATE presentemployers SET {set_clause} WHERE CompanyCode = %s"
+            cursor.execute(query, values)
+            cnx.commit()
+            return (jsonify({'message': 'Present Employer updated successfully'}), 200)
+    finally:
+        cursor.close()
 
 
 if __name__ == '__main__':

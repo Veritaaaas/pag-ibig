@@ -63,6 +63,7 @@ function MemberModal({ member, setShowModal }) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                type: 'member',
                 PI_MID: memberFormData.PI_MID
             }),
         })
@@ -87,6 +88,7 @@ function MemberModal({ member, setShowModal }) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                type: 'member',
                 memberFormData
             }),
         })
