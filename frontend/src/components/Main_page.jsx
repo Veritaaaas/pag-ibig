@@ -6,7 +6,8 @@ import Header from "./Header";
 import Form from "./form/Form";
 import Members from "./Members";
 import PresentEmp from "./PresentEmp";
-import PrevEmp from "./PrevEmp";
+import PrevEmployment from "./PrevEmployment";
+import PrevEmployer from "./PrevEmployer";
 import Heirs from "./Heirs";
 
 function Main_page() {
@@ -14,6 +15,7 @@ function Main_page() {
     const location = useLocation();
     const [members, setMembers] = useState([]);
     const [presentEmployer, setPresentEmployer] = useState([]);
+    const [prevEmployment, setPrevEmployment] = useState([]);
     const [prevEmployer, setPrevEmployer] = useState([]);
     const [heirs, setHeirs] = useState([]);
 
@@ -39,9 +41,21 @@ function Main_page() {
         }
     }
 
+    const getPrevEmployment = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/prevEmployment");
+            const jsonData = await response.json();
+            console.log(jsonData);
+            setPrevEmployment(jsonData);
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+
     const getPrevEmployer = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/prevEmp");
+            const response = await fetch("http://127.0.0.1:5000/prevEmployer");
             const jsonData = await response.json();
             console.log(jsonData);
             setPrevEmployer(jsonData);
@@ -50,6 +64,7 @@ function Main_page() {
             alert(err.message);
         }
     }
+
 
     const getHeirs = async () => {
         try {
@@ -72,7 +87,10 @@ function Main_page() {
         else if (location.pathname === "/presentEmp") {
             getPresentEmployer();
         }
-        else if (location.pathname === "/prevEmp") {
+        else if (location.pathname === "/prevEmployment") {
+            getPrevEmployment();
+        }
+        else if (location.pathname === "/prevEmployer") {
             getPrevEmployer();
         }
         else if (location.pathname === "/heirs") {
@@ -83,12 +101,13 @@ function Main_page() {
     return (
         <div className="flex">
             <Sidebar />
-            <div className="w-full">
+            <div className="w-full max-w-[80%]">
                 <Header />
-                {location.pathname === "/members" && <Members members={members}/>}
+                {location.pathname === "/members" && <Members members={members} setMembers={setMembers}/>}
                 {location.pathname === "/add-member" && <Form />}
                 {location.pathname === "/presentEmp" && <PresentEmp emp={presentEmployer} />}
-                {location.pathname === "/prevEmp" && <PrevEmp prevEmp={prevEmployer} />}
+                {location.pathname === "/prevEmployment" && <PrevEmployment prevEmp={prevEmployment} />}
+                {location.pathname === "/prevEmployer" && <PrevEmployer prevEmp={prevEmployer} />}
                 {location.pathname === "/heirs" && <Heirs heirs={heirs} />}
             </div>
         </div>

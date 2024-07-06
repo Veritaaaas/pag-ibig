@@ -9,7 +9,8 @@ function App() {
         <Route path="/members" element={<Main_page />} />
         <Route path="/add-member" element={<Main_page />} />
         <Route path="/presentEmp" element={<Main_page />} />
-        <Route path="/prevEmp" element={<Main_page />} />
+        <Route path="/prevEmployment" element={<Main_page />} />
+        <Route path="/prevEmployer" element={<Main_page />} />
         <Route path="/heirs" element={<Main_page />} />
       </Routes>
     </Router>

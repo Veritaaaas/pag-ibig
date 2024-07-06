@@ -3,7 +3,7 @@
 function PresentEmp({ emp }) {
 
     return (
-        <div className="mt-12 px-8">
+        <div className="mt-12 px-8 overflow-x-auto">
             <table className="text-[#636363]">
                 <thead className="text-[#2b2b2b] text-[18px]">
                     <tr className="border-b-4 border-gray-200">
