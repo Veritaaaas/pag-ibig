@@ -53,11 +53,6 @@ function MemberModal({ member, setShowModal }) {
         setMemberFormData({ ...memberFormData, Membership_subcategory: newValue ? newValue.value : '' });
     }
 
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        console.log(memberFormData);
-    }
-
     const handleDelete = (e) => {
         e.preventDefault();
         console.log(memberFormData.PI_MID)
@@ -82,6 +77,31 @@ function MemberModal({ member, setShowModal }) {
         setShowModal(false);
     }
 
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        console.log(memberFormData);
+
+        fetch('http://localhost:5000/update-member', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                memberFormData
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert('Success Update');
+            setShowModal(false);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        
+    }
+
     return (
         <form>
             <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
@@ -93,10 +113,6 @@ function MemberModal({ member, setShowModal }) {
                         <h1 className="text-xl font-semibold">Membership Details</h1>
                         <div className="flex flex-col gap-4 text-md mt-6">
                             <div className="flex gap-10">
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="pagIbigMID">Pag-ibig MID</label>
-                                    <input type="text" required className="rounded-lg border-[#bcbcbc] border-[1px] p-2" name="PI_MID" id="pagIbigMID" placeholder="00000000" value={memberFormData.PI_MID} onChange={handleInputChange}/>
-                                </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="occupationalStatus">Occupational Status</label>
                                     <div className="flex gap-4">
@@ -235,11 +251,11 @@ function MemberModal({ member, setShowModal }) {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="serialBadgeNo">Serial Badge No.</label>
-                                    <input type="text" className="rounded-lg border-[#bcbcbc] border-[1px] p-2" name="SerialBadgeNo" id="serialBadgeNo" placeholder="000000" value={memberFormData.SerialBadgeNo} onChange={handleInputChange}/>
+                                    <input type="text" className="rounded-lg border-[#bcbcbc] border-[1px] p-2" name="SerialBadge" id="serialBadgeNo" placeholder="000000" value={memberFormData.SerialBadge} onChange={handleInputChange}/>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="divisionStationCode">Division/Station Code</label>
-                                    <input type="text" className="rounded-lg border-[#bcbcbc] border-[1px] p-2" name="DivisionStationCode" id="divisionStationCode" placeholder="000000" value={memberFormData.DivisionStationCode} onChange={handleInputChange}/>
+                                    <input type="text" className="rounded-lg border-[#bcbcbc] border-[1px] p-2" name="DivStationCode" id="divisionStationCode" placeholder="000000" value={memberFormData.DivStationCode} onChange={handleInputChange}/>
                                 </div>
                             </div>
                             <div className="flex gap-10">

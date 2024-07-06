@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MemberModal from "./modals/MemberModal";
 
-function Members({ members }) {
+function Members({ members, setMembers }) {
 
 
     const [showModal, setShowModal] = useState(false);
@@ -12,8 +12,24 @@ function Members({ members }) {
         setShowModal(true);
     }
 
+    const getMembers = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/members");
+            const jsonData = await response.json();
+            setMembers(jsonData);
+            console.log(jsonData);
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
+    useEffect(() => {
+        getMembers();
+    }, [showModal]);
+
+
     return (
-        <div className="mt-12 px-8">
+        <div className="mt-12 px-8 overflow-x-auto">
             <table className="text-[#636363]">
                 <thead className="text-[#2b2b2b] text-[18px]">
                     <tr className="border-b-4 border-gray-200">

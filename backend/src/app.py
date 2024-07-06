@@ -29,8 +29,16 @@ def get_presentEmp():
     cursor.close()
     return jsonify(employers)
 
-@app.route('/prevEmp', methods=['GET'])
-def get_prevEmp():
+@app.route('/prevEmployment', methods=['GET'])
+def get_prevEmployment():
+    cursor = cnx.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM prevemployment")
+    employers = cursor.fetchall()
+    cursor.close()
+    return jsonify(employers)
+
+@app.route('/prevEmployer', methods=['GET'])
+def get_prevEmployer():
     cursor = cnx.cursor(dictionary=True)
     cursor.execute("SELECT * FROM prevemployers")
     employers = cursor.fetchall()
@@ -151,11 +159,35 @@ def add_member():
 def delete():
     data = request.json
     cursor = cnx.cursor(dictionary=True)
-    print(data['PI_MID'])
     cursor.execute(f"DELETE FROM members WHERE PI_MID = {data['PI_MID']}")
     cnx.commit()
     cursor.close()
     return 'Member deleted successfully', 200
+
+@app.route('/update-member', methods=['POST'])
+def update_member():
+    data = request.json
+    cursor = cnx.cursor(dictionary=True)
+    
+    # Assuming you have a mapping of form data fields to database columns
+    columns = [
+        'Occupational_Status', 'Membership_category', 'Membership_subcategory',
+        'Name', 'FatherName', 'MotherName', 'SpouseName', 'BirthDate',
+        'BirthPlace', 'MaritalStatus', 'Citizenship', 'Sex', 'Height', 'Weight',
+        'ProminentFeatures', 'PaymentFrequency', 'TIN', 'SSS', 'SerialBadge',
+        'DivStationCode', 'PernAddress', 'CurrAddress', 'MailAddress',
+        'HomeCode', 'CellNum', 'BusinessDirectLine', 'BusinessTrunkLine',
+        'EmailAddress', 'CompanyCode'
+    ]
+    set_clause = ', '.join([f"{col} = %s" for col in columns])
+    values = tuple(data['memberFormData'][col] for col in columns) + (data['memberFormData']['PI_MID'],)
+    
+    query = f"UPDATE members SET {set_clause} WHERE PI_MID = %s"
+    cursor.execute(query, values)
+    cnx.commit()
+
+    return (jsonify({'message': 'Member updated successfully'}), 200)
+    
 
 
 if __name__ == '__main__':
