@@ -69,7 +69,9 @@ function MemberModal({ member, setShowModal }) {
         })
         .then(response => response.json())
         .then(data => {
-            alert('Success Deletion');
+            console.log('Success:', data);
+            alert('Member Record Deleted Successfully!')
+            setShowModal(false);
         })
         .catch((error) => {
             console.error('Error:', error);

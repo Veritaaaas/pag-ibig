@@ -40,18 +40,18 @@ function Address_Contact_form({ addressContactFormData, setAddressContactFormDat
                 <div className="flex gap-14">
                     <div className='flex flex-col max-w-fit gap-2'>
                         <label htmlFor='Home Code'>Home Code</label>
-                        <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[150px]" name="homeCode" id="Home Code" placeholder="123" onChange={handleInputChange}/>
+                        <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[150px]" name="homeCode" id="Home Code" placeholder="00-0000" onChange={handleInputChange}/>
                     </div>
                     <div className='flex flex-col max-w-fit gap-2'>
                         <label htmlFor='Mobile Number'>Mobile Number</label>
                         <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[150px]" name="cellNum" id="Mobile Number" placeholder="09123456789" onChange={handleInputChange}/>
                     </div>
                     <div className='flex flex-col max-w-fit gap-2'>
-                        <label htmlFor='Business Direct Line'>Business Direct Line</label>
+                        <label htmlFor='businessDirectLine'>Business Direct Line</label>
                         <input type="text" className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[150px]" name="businessDirectLine" id="Business Direct Line" placeholder="123" onChange={handleInputChange}/>
                     </div>
                     <div className='flex flex-col max-w-fit gap-2'>
-                        <label htmlFor='Business Trunk Line'>Business Trunk Line</label>
+                        <label htmlFor='businessTrunkLine'>Business Trunk Line</label>
                         <input type="text" className="rounded-xl border-[#bcbcbc] border-[1px] p-2 w-[150px]" name="businessTrunkLine" id="Business Trunk Line" placeholder="123" onChange={handleInputChange}/>
                     </div>
                     <div className='flex flex-col max-w-fit gap-2'>

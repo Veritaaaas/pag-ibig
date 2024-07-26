@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa'; 
 import Select from 'react-select';  
 
-function PrevEmploymentModal({ emp, setShowModal}) {
+function PrevEmploymentModal({ emp, setShowModal }) {
     
     const [empFormData, setEmpFormData] = useState(emp);
 
@@ -80,7 +80,7 @@ function PrevEmploymentModal({ emp, setShowModal}) {
                         <button onClick={() => setShowModal(false)}><FaTimes /></button>
                     </div>
                     <div>
-                        <h1 className="text-[#2b2b2b] text-xl font-bold">Previous Employment</h1>
+                        <h1 className="text-[rgb(43,43,43)] text-xl font-bold">Previous Employment</h1>
                         <div className="flex flex-col gap-4 text-md mt-6">
                             <div className="flex gap-10">
                                 <div className="flex flex-col max-w-fit gap-2">

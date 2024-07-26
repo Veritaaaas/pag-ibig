@@ -73,7 +73,7 @@ function Form() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-10 mt-10 px-8 py-8 max-w-[82%]">
+            <div className="flex flex-col gap-10 mt-10 px-8 py-8">
                 <Member_form 
                     memberFormData={memberFormData}
                     setMemberFormData={setMemberFormData}

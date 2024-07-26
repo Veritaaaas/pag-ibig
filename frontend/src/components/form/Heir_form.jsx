@@ -5,6 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 function Heir_form({ heirFormData, setHeirFormData }) {
 
     const initialHeir = {
+        heirID: '',
         heirName: '',
         relationship: '',
         birth_date: '',
@@ -36,6 +37,10 @@ function Heir_form({ heirFormData, setHeirFormData }) {
             <div className="flex flex-col gap-8 px-6 mt-4 text-xl">
                 {heirs.map((heir, index) => (
                     <div key={index} className="flex gap-32 text-lg">
+                        <div className="flex flex-col text-lg max-w-fit gap-2">
+                        <label htmlFor={`heirID-${index}`}>Heir ID</label>
+                        <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="heirID" id={`heirID-${index}`} placeholder="H-1111" value={heir.heirID} onChange={(e) => handleHeirChange(index, e)}/>
+                        </div>
                         <div className="flex flex-col text-lg max-w-fit gap-2">
                             <label htmlFor={`heirName-${index}`}>Heir Name</label>
                             <input type="text" required className="rounded-xl border-[#bcbcbc] border-[1px] p-2" name="heirName" id={`heirName-${index}`} placeholder="Juan Dela Cruz" value={heir.heirName} onChange={(e) => handleHeirChange(index, e)}/>

@@ -1,23 +1,29 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Form from "./form/Form";
-import Members from "./Members";
-import PresentEmp from "./PresentEmp";
-import PrevEmployment from "./PrevEmployment";
-import PrevEmployer from "./PrevEmployer";
-import Heirs from "./Heirs";
+import Members from "./tables/Members";
+import PresentEmp from "./tables/PresentEmp";
+import PrevEmployment from "./tables/PrevEmployment";
+import PrevEmployer from "./tables/PrevEmployer";
+import Heirs from "./tables/Heirs";
+import Result from "./Result";
+import Shortcut from "./Shortcut";
 
 function Main_page() {
 
+    const { query } = useParams();
     const location = useLocation();
+    const matchSearch = useMatch("/search/:query");
+
     const [members, setMembers] = useState([]);
     const [presentEmployer, setPresentEmployer] = useState([]);
     const [prevEmployment, setPrevEmployment] = useState([]);
     const [prevEmployer, setPrevEmployer] = useState([]);
     const [heirs, setHeirs] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
 
     const getMembers = async () => {
         try {
@@ -65,7 +71,6 @@ function Main_page() {
         }
     }
 
-
     const getHeirs = async () => {
         try {
             const response = await fetch("http://127.0.0.1:5000/heirs");
@@ -76,9 +81,7 @@ function Main_page() {
         catch (err) {
             alert(err.message);
         }
-    }
-
-
+    } 
 
     useEffect(() => {
         if (location.pathname === "/members") {
@@ -96,19 +99,28 @@ function Main_page() {
         else if (location.pathname === "/heirs") {
             getHeirs();
         }
+
     }, [location.pathname]);
+
+    useEffect(() => {
+        if (query) {
+            setSearchResult(query);
+        }
+    }, [query]);
 
     return (
         <div className="flex">
             <Sidebar />
             <div className="w-full max-w-[80%]">
-                <Header />
+                <Header/>
                 {location.pathname === "/members" && <Members members={members} setMembers={setMembers}/>}
                 {location.pathname === "/add-member" && <Form />}
                 {location.pathname === "/presentEmp" && <PresentEmp emp={presentEmployer} setEmp={setPresentEmployer}/>}
-                {location.pathname === "/prevEmployment" && <PrevEmployment prevEmp={prevEmployment} />}
-                {location.pathname === "/prevEmployer" && <PrevEmployer prevEmp={prevEmployer} />}
-                {location.pathname === "/heirs" && <Heirs heirs={heirs} />}
+                {location.pathname === "/prevEmployment" && <PrevEmployment prevEmp={prevEmployment} setPrevEmp={setPrevEmployment} />}
+                {location.pathname === "/prevEmployer" && <PrevEmployer prevEmp={prevEmployer} setPrevEmp={setPrevEmployer} />}
+                {location.pathname === "/heirs" && <Heirs heirs={heirs} setHeirs={setHeirs} />}
+                {location.pathname === "/shortcuts" && <Shortcut />}
+                {matchSearch && <Result searchResult={searchResult} />}
             </div>
         </div>
     );

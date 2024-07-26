@@ -14,6 +14,7 @@ function PrevEmpForm({ PrevEmpFormData, setPrevEmpFormData }) {
     ];
 
     const initialEmployment = {
+        prevCompCode: '',
         employerName: '',
         employerAddress: '',
         officeAssignment: '',
@@ -67,6 +68,18 @@ function PrevEmpForm({ PrevEmpFormData, setPrevEmpFormData }) {
                     <div className="flex gap-8 text-lg" key={index}>
                         {/* Employer/Business Name */}
                         <div className="flex flex-col text-lg max-w-fit gap-2">
+                            <label htmlFor='prevCompCode'>Previous Company Code</label>
+                            <input
+                                type="text"
+                                className="rounded-xl border-[#bcbcbc] border-[1px] p-2"
+                                name='prevCompCode'
+                                id={`prevCompCode-${index}`}
+                                value={employment.prevCompCode}
+                                onChange={(e) => handleInputChange(e, index)}
+                                placeholder="EMP1111"
+                            />
+                        </div>
+                        <div className="flex flex-col text-lg max-w-fit gap-2">
                             <label htmlFor='employerName'>Employer/Business Name</label>
                             <input
                                 type="text"
@@ -102,6 +115,7 @@ function PrevEmpForm({ PrevEmpFormData, setPrevEmpFormData }) {
                                 className="w-[200px]"
                                 onChange={(newValue) => handleSelectInput(newValue, index)}
                             />
+                        
                         </div>
                         {/* From Date */}
                         <div className="flex flex-col max-w-fit gap-2">
@@ -156,10 +170,6 @@ function PrevEmpForm({ PrevEmpFormData, setPrevEmpFormData }) {
     );
 }
 
-// PropTypes validation
-PrevEmpForm.propTypes = {
-    PrevEmpFormData: PropTypes.array.isRequired,
-    setPrevEmpFormData: PropTypes.func.isRequired,
-};
+
 
 export default PrevEmpForm;

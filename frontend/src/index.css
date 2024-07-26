@@ -6,3 +6,9 @@
     background-color: #F1F4FF; 
     color: #3564FD; 
 }
+
+.left-side {
+    background-image: url('https://files01.pna.gov.ph/ograph/2020/08/25/pag-ibig-new-logo.jpg');
+    background-size: cover;
+    background-position: center;
+}

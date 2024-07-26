@@ -5,6 +5,7 @@ import { FaRegBuilding } from "react-icons/fa";
 import { BsBuildings } from "react-icons/bs";
 import { MdFaceUnlock } from "react-icons/md";
 import { FaSuitcase } from "react-icons/fa6";
+import { FaRegLightbulb } from "react-icons/fa";
 
 import Logo from '../assets/logo.png';
 
@@ -46,6 +47,12 @@ function Sidebar() {
                     <div className={`flex items-center gap-16 p-4 rounded-xl ${location.pathname === '/heirs' ? 'active' : ''}`}>
                         <MdFaceUnlock className='text-[30px]' />
                         <h1 className="text-[16px] font-semibold">Heirs</h1>
+                    </div>
+                </Link>
+                <Link to='/shortcuts'>
+                    <div className={`flex items-center gap-16 p-4 rounded-xl ${location.pathname === '/shortcuts' ? 'active' : ''}`}>
+                        <FaRegLightbulb className='text-[30px]' />
+                        <h1 className="text-[16px] font-semibold">Shortcuts</h1>
                     </div>
                 </Link>
             </div>
